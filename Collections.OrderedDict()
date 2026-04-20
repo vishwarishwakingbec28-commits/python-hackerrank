@@ -1,0 +1,10 @@
+from collections import OrderedDict
+n = int(input())
+item_inventory = OrderedDict()
+
+for _ in range(n):
+    item_name, space, price = input().rpartition(' ')
+    item_inventory[item_name] = item_inventory.get(item_name, 0) + int(price)
+
+for name, net_price in item_inventory.items():
+    print(f"{name} {net_price}")
