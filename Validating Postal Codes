@@ -1,0 +1,11 @@
+import re
+
+# Rule 1: The number must be in the range from 100,000 to 999,999 inclusive.
+# This means it must be exactly 6 digits long and cannot start with 0.
+regex_integer_in_range = r"^[1-9]\d{5}$"
+
+# Rule 2: It must not contain more than one alternating repetitive digit pair.
+# An alternating pair is a digit that repeats with exactly one digit in between (e.g., 121).
+# We use a capturing group (\d) and a lookahead (?=\d\1) to find these pairs without 
+# consuming the middle digit, which allows us to find overlapping pairs like 555.
+regex_alternating_repetitive_digit_pair = r"(\d)(?=\d\1)"
