@@ -1,0 +1,35 @@
+#include <string>
+#include <vector>
+
+class Solution {
+public:
+    std::vector<std::string> generateParenthesis(int n) {
+        std::vector<std::string> result;
+        std::string current = "";
+        backtrack(result, current, 0, 0, n);
+        return result;
+    }
+
+private:
+    void backtrack(std::vector<std::string>& result, std::string& current, int openCount, int closeCount, int maxPairs) {
+        // Base Case: valid combination formed
+        if (current.length() == maxPairs * 2) {
+            result.push_back(current);
+            return;
+        }
+
+        // Choice 1: Add an open parenthesis if we haven't used all of them
+        if (openCount < maxPairs) {
+            current.push_back('(');
+            backtrack(result, current, openCount + 1, closeCount, maxPairs);
+            current.pop_back(); // Undo choice (backtrack)
+        }
+
+        // Choice 2: Add a close parenthesis if it won't violate well-formedness
+        if (closeCount < openCount) {
+            current.push_back(')');
+            backtrack(result, current, openCount, closeCount + 1, maxPairs);
+            current.pop_back(); // Undo choice (backtrack)
+        }
+    }
+};
