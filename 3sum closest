@@ -1,0 +1,43 @@
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+class Solution {
+public:
+    int threeSumClosest(std::vector<int>& nums, int target) {
+        // Sort the array to make the two-pointer sweep possible
+        std::sort(nums.begin(), nums.end());
+        
+        // Initialize closest_sum with the first available triplet sum
+        int closest_sum = nums[0] + nums[1] + nums[2];
+        int n = nums.size();
+        
+        for (int i = 0; i < n - 2; ++i) {
+            int left = i + 1;
+            int right = n - 1;
+            
+            while (left < right) {
+                int current_sum = nums[i] + nums[left] + nums[right];
+                
+                // If a perfect match is found, return immediately
+                if (current_sum == target) {
+                    return target;
+                }
+                
+                // If the current triplet sum is closer to target, update the best answer
+                if (std::abs(current_sum - target) < std::abs(closest_sum - target)) {
+                    closest_sum = current_sum;
+                }
+                
+                // Adjust pointers based on comparison with target
+                if (current_sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        
+        return closest_sum;
+    }
+};
