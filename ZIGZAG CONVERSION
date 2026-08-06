@@ -1,0 +1,30 @@
+#include <string>
+
+class Solution {
+public:
+    std::string convert(std::string s, int numRows) {
+        // Base case: if 1 row or string is shorter than rows, no change is made
+        if (numRows <= 1 || numRows >= s.length()) {
+            return s;
+        }
+        
+        std::string result = "";
+        int n = s.length();
+        int cycleLen = 2 * numRows - 2;
+        
+        // Loop through each row
+        for (int r = 0; r < numRows; ++r) {
+            for (int i = 0; i + r < n; i += cycleLen) {
+                // Add the vertically aligned character
+                result += s[i + r];
+                
+                // Add diagonal character if it's a middle row and within boundaries
+                if (r != 0 && r != numRows - 1 && i + cycleLen - r < n) {
+                    result += s[i + cycleLen - r];
+                }
+            }
+        }
+        
+        return result;
+    }
+};
